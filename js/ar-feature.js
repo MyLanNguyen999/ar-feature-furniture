@@ -63,12 +63,12 @@ window.addEventListener('resize', () => {
 });
 
 // * ADD WebXR *//
-// const xr = await scene.createDefaultXRExperienceAsync({
-//         uiOpjects: {
-//             sessionMode: "immersive-ar",
-//         },
-//         optionalFeatures: true
-//     });
+const xr = await scene.createDefaultXRExperienceAsync({
+        uiOpjects: {
+            sessionMode: "immersive-ar",
+        },
+        optionalFeatures: true
+    });
 
 // * HIT TEST *//
 
