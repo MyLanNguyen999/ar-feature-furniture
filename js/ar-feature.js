@@ -10,7 +10,7 @@ const createScene = async function () {
     const scene = new BABYLON.Scene(engine);
 
     // change the color of the scene background
-    scene.clearColor = new BABYLON.Color4(1, 1, 1, 1); // White background (RGBA)
+    scene.clearColor = new BABYLON.Color(206, 208, 206); 
 
     //* CAMERA *//
     // add camera to the canvas
