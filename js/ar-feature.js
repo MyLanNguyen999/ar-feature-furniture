@@ -23,15 +23,19 @@ const createScene = async function () {
     // add light to the scene
     const light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 0.7;
+
+    // Add an HDR environment texture for proper lighting
+    const hdrTexture = await BABYLON.CubeTexture.CreateFromPrefilteredData("https://playground.babylonjs.com/textures/environment.env", scene);
+    scene.environmentTexture = hdrTexture;
     
     // * MESH *//
     // add a 3D model of a sofa using ImportMeshAsync method
     // source: https://sketchfab.com/3d-models/sofa-80edec2de8c04a4fb335a48b550a2336
-    const sofa = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa.glb", scene).then((result) => {
+    const sofa = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa-1.glb", scene).then((result) => {
         let sofaMesh = result.meshes[0];
 
         // position the sofa
-        sofaMesh.position = new BABYLON.Vector3(-2.5, 0.1, -2.5);
+        sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
 
         // scale the sofa
         sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
