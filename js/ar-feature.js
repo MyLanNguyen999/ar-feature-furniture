@@ -5,13 +5,17 @@ const canvas = document.getElementById('renderCanvas');
 const engine = new BABYLON.Engine(canvas, true);
 
 // generate createScene function
-const createScene = function () {
+const createScene = async function () {
     // create a new BABYLON scene, passing in the engine as an argument
     const scene = new BABYLON.Scene(engine);
 
+    // change the color of the scene background
+    scene.clearColor = new BABYLON.Color4(1, 1, 1, 1); // White background (RGBA)
+
     //* CAMERA *//
     // add camera to the canvas
-    const camera = new BABYLON.ArcRotateCamera('camera', Math.PI / 2, Math.PI / 2, 2, BABYLON.Vector3(0,0,0));
+    const camera = new BABYLON.ArcRotateCamera('camera', Math.PI / 2, Math.PI / 2, 2, BABYLON.Vector3.Zero(), scene);
+
     // attach camera to the scene
     camera.attachControl(canvas, true);
 
@@ -23,14 +27,14 @@ const createScene = function () {
     // * MESH *//
     // add a 3D model of a sofa using ImportMeshAsync method
     // source: https://sketchfab.com/3d-models/sofa-80edec2de8c04a4fb335a48b550a2336
-    const sofa = BABYLON.sceneLoader.ImportMeshAsync('', './meshes/', 'sofa.glb', scene).then((result) => {
+    const sofa = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa.glb", scene).then((result) => {
         let sofaMesh = result.meshes[0];
 
         // position the sofa
-        sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
+        sofaMesh.position = new BABYLON.Vector3(-2.5, 0.1, -2.5);
 
         // scale the sofa
-        sofaMesh.scaling = new BABYLON.Vector3(10, 10, 10);
+        sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
 
     });
 
