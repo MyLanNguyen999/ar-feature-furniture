@@ -72,29 +72,29 @@ const xr = await scene.createDefaultXRExperienceAsync({
 
 // * HIT TEST *//
 
-// const hitTest = await xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRHitTest, "latest");
+const hitTest = await xr.baseExperience.featuresManager.enableFeature(BABYLON.WebXRHitTest, "latest");
 
-//     // Create a marker to show where a hit-test has registered a surface
-//     const marker = BABYLON.MeshBuilder.CreateTorus("marker", {diameter: 0.15, thickness: 0.05}, scene);
-//     marker.isVisible = false;
-//     marker.rotationQuaternion = new BABYLON.Quaternion();
+    // Create a marker to show where a hit-test has registered a surface
+    const marker = BABYLON.MeshBuilder.CreateTorus("marker", {diameter: 0.15, thickness: 0.05}, scene);
+    marker.isVisible = false;
+    marker.rotationQuaternion = new BABYLON.Quaternion();
     
-//     // Create a variable to store the latest hit-test results
-//     let latestHitTestResults = null;
+    // Create a variable to store the latest hit-test results
+    let latestHitTestResults = null;
 
-//     // Add an event listener for the hit-test results
-//     hitTest.onHitTestResultObservable.add((results) => {
+    // Add an event listener for the hit-test results
+    hitTest.onHitTestResultObservable.add((results) => {
 
-//     // If there is a hit-test result, turn on the marker, and extract the position, rotation, and scaling from the hit-test result
-//     if (results.length) {
-//         marker.isVisible = true;
-//         results[0].transformationMatrix.decompose(marker.scaling, marker.rotationQuaternion, marker.position);
-//         latestHitTestResults = results;
-//     } else {
-//             // If there is no hit-test result, turn off the marker and clear the stored results
-//             marker.isVisible = false;
-//             latestHitTestResults = null;
-//         };
-//     });
+    // If there is a hit-test result, turn on the marker, and extract the position, rotation, and scaling from the hit-test result
+    if (results.length) {
+        marker.isVisible = true;
+        results[0].transformationMatrix.decompose(marker.scaling, marker.rotationQuaternion, marker.position);
+        latestHitTestResults = results;
+    } else {
+            // If there is no hit-test result, turn off the marker and clear the stored results
+            marker.isVisible = false;
+            latestHitTestResults = null;
+        };
+    });
 
 // * ANCHOR *//
