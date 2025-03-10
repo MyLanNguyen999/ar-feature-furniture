@@ -31,7 +31,9 @@ const createScene = async function () {
     // * MESH *//
     // add a 3D model of a sofa using ImportMeshAsync method
     // source: https://sketchfab.com/3d-models/sofa-80edec2de8c04a4fb335a48b550a2336
-    const sofa = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa-1.glb", scene).then((result) => {
+    // source: https://sketchfab.com/3d-models/grey-sofa-e94e15859aff4c5ebf4791c46ab8ba42
+
+    const sofa = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa.glb", scene).then((result) => {
         let sofaMesh = result.meshes[0];
 
         // position the sofa
