@@ -50,7 +50,7 @@ const createScene = async function () {
   const sofa = BABYLON.SceneLoader.ImportMeshAsync(
     "",
     "./meshes/",
-    "sofa.glb",
+    "sofa.gltf",
     scene
   ).then((result) => {
     let sofaMesh = result.meshes[0];
