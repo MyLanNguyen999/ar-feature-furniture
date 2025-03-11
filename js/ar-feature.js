@@ -64,7 +64,7 @@ const createScene = async function () {
       sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
 
       //* ROTATION *//
-    sofaMesh.rotation.y = Math.PI;
+    sofaMesh.rotation.y = -Math.PI;
     });
 
    
