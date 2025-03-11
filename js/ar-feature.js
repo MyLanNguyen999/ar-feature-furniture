@@ -55,7 +55,7 @@ const createScene = async function () {
 
             //* ROTATION *//
             sofaMesh.rotation.y = Math.PI;
-            // sofaMesh.scaling.z = -1;
+            sofaMesh.scaling.z = -1;
         });
 
     // * ADD WebXR *//
