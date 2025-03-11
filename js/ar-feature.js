@@ -63,10 +63,10 @@ const createScene = async function () {
   });
   // * ADD WebXR *//
     const xr = await scene.createDefaultXRExperienceAsync({
-      uiOpjects: {
+      uiOptions: {
         sessionMode: "immersive-ar",
       },
-      optionalFeatures: true,
+      optionalFeatures: ["hit-test"],
     });
 
   // * HIT TEST *//
