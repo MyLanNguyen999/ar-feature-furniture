@@ -64,8 +64,8 @@ const createScene = async function () {
       sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
 
       //* ROTATION *//
-    sofaMesh.rotation.x = Math.PI / 2;
-sofaMesh.scaling.z *= -1;
+    // sofaMesh.rotation.y = Math.PI;
+    sofaMesh.scaling.z = -1;
    
 
     // * ADD WebXR *//
