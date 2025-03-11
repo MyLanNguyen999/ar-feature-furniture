@@ -43,7 +43,13 @@ const createScene = async function () {
         sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
 
     });
-
+    // * ADD WebXR *//
+    const xr = await scene.createDefaultXRExperienceAsync({
+            uiOpjects: {
+                sessionMode: "immersive-ar",
+            },
+            optionalFeatures: true
+        });
     // * RETURN SCENE *//
     return scene;
 };
@@ -62,13 +68,7 @@ window.addEventListener('resize', () => {
     engine.resize();
 });
 
-// * ADD WebXR *//
-const xr = await scene.createDefaultXRExperienceAsync({
-        uiOpjects: {
-            sessionMode: "immersive-ar",
-        },
-        optionalFeatures: true
-    });
+
 
 // * HIT TEST *//
 
