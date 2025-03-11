@@ -100,7 +100,7 @@ const createScene = async function () {
             // If there is no hit-test result, turn off the marker and clear the stored results
             marker.isVisible = false;
             latestHitTestResults = null;
-        }
+        };
     });
 
     // * ANCHOR *//
@@ -121,7 +121,7 @@ const createScene = async function () {
                 .catch((error) => {
                     console.log(error);
                 });
-        }
+        };
     });
 
     // * RETURN SCENE *//
