@@ -47,35 +47,25 @@ const createScene = async function () {
     // source: https://sketchfab.com/3d-models/sofa-80edec2de8c04a4fb335a48b550a2336
     // source: https://sketchfab.com/3d-models/grey-sofa-e94e15859aff4c5ebf4791c46ab8ba42
 
-    let sofaMesh = null;
-    BABYLON.SceneLoader.ImportMeshAsync(
-      "",
-      "./meshes/",
-      "sofa.gltf",
-      scene
+    
+
+    const sofa = BABYLON.SceneLoader.ImportMeshAsync(
+        "",
+        "./meshes/",
+        "sofa.gltf",
+        scene
     ).then((result) => {
-      sofaMesh = result.meshes[0];
+      let sofaMesh = result.meshes[0];
+
+      position the sofa
       sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
+
+      // scale the sofa
       sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
+
+      //* ROTATION *//
+    sofaMesh.rotation.y = Math.PI;
     });
-
-    // const sofa = BABYLON.SceneLoader.ImportMeshAsync(
-    //     "",
-    //     "./meshes/",
-    //     "sofa.gltf",
-    //     scene
-    // ).then((result) => {
-    //   let sofaMesh = result.meshes[0];
-
-      // position the sofa
-    //   sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
-
-    //   // scale the sofa
-    //   sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
-
-    //   //* ROTATION *//
-    // sofaMesh.rotation.y = Math.PI;
-    // });
 
    
 
