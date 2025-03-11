@@ -126,7 +126,7 @@ const createScene = async function () {
 
     // * RETURN SCENE *//
     return scene;
-}
+};
 
 // * RENDER SCENE *//
 // Render the scene in loop
