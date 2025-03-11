@@ -36,44 +36,34 @@ const createScene = async function () {
     light.intensity = 0.7;
 
     // Add an HDR environment texture for proper lighting
-    const hdrTexture = await BABYLON.CubeTexture.CreateFromPrefilteredData(
-        "https://playground.babylonjs.com/textures/environment.env",
-        scene
-    );
+    const hdrTexture = await BABYLON.CubeTexture.CreateFromPrefilteredData("https://playground.babylonjs.com/textures/environment.env", scene);
     scene.environmentTexture = hdrTexture;
 
     // * MESH *//
     // add a 3D model of a sofa using ImportMeshAsync method
     // source: https://sketchfab.com/3d-models/sofa-80edec2de8c04a4fb335a48b550a2336
     // source: https://sketchfab.com/3d-models/grey-sofa-e94e15859aff4c5ebf4791c46ab8ba42
+    const sofa = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa.glb", scene)
+        .then((result) => {
+            let sofaMesh = result.meshes[0];
 
-    
+            //position the sofa
+            sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
 
-    const sofa = BABYLON.SceneLoader.ImportMeshAsync(
-        "",
-        "./meshes/",
-        "sofa.glb",
-        scene
-    ).then((result) => {
-      let sofaMesh = result.meshes[0];
+            // scale the sofa
+            sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
 
-      //position the sofa
-      sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
-
-      // scale the sofa
-      sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
-
-      //* ROTATION *//
-    // sofaMesh.rotation.y = Math.PI;
-    // sofaMesh.scaling.z = -1;
-   
+            //* ROTATION *//
+            sofaMesh.rotation.y = Math.PI;
+            // sofaMesh.scaling.z = -1;
+        });
 
     // * ADD WebXR *//
     const xr = await scene.createDefaultXRExperienceAsync({
         uiOptions: {
             sessionMode: "immersive-ar",
         },
-        optionalFeatures: ["hit-test","anchor"],
+        optionalFeatures: ["hit-test", "anchor"],
     });
 
     // * HIT TEST *//
@@ -136,7 +126,7 @@ const createScene = async function () {
 
     // * RETURN SCENE *//
     return scene;
-};
+}
 
 // * RENDER SCENE *//
 // Render the scene in loop
