@@ -52,12 +52,12 @@ const createScene = async function () {
     const sofa = BABYLON.SceneLoader.ImportMeshAsync(
         "",
         "./meshes/",
-        "sofa.gltf",
+        "sofa.glb",
         scene
     ).then((result) => {
       let sofaMesh = result.meshes[0];
 
-      position the sofa
+      //position the sofa
       sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
 
       // scale the sofa
