@@ -98,6 +98,9 @@ const xr = await scene.createDefaultXRExperienceAsync({
   optionalFeatures: true,
 });
 
+// Make the sofa grabbable
+sofaMesh.bakeCurrentTransformIntoVertices().addBehavior(new BABYLON.SixDofDragBehavior());
+
   return scene;
 };
 
