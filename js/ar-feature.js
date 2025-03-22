@@ -1,3 +1,4 @@
+// Source: https://sketchfab.com/3d-models/sofa-80edec2de8c04a4fb335a48b550a2336
 // Get the canvas element
 const canvas = document.getElementById("renderCanvas");
 const engine = new BABYLON.Engine(canvas, true);
@@ -35,7 +36,7 @@ async function loadSofa(scene) {
   // Ensure the sofa is visible and pickable
   sofaMesh.isPickable = true;
   sofaMesh.position = new BABYLON.Vector3(0, 1, 0);
-  sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
+  sofaMesh.scaling = new BABYLON.Vector3(1, 1, 1);
   sofaMesh.rotation.y = Math.PI;
   sofaMesh.scaling.z = -1;
 
@@ -45,6 +46,17 @@ async function loadSofa(scene) {
 const dragBehavior = new BABYLON.SixDofDragBehavior();
 sofaMesh.addBehavior(dragBehavior);
 }
+// Track when dragging starts
+    dragBehavior.onDragStartObservable.add(() => {
+        isDragging = true;
+    });
+
+    // Track when dragging ends
+    dragBehavior.onDragEndObservable.add(() => {
+        setTimeout(() => {
+            isDragging = false;
+        }, 200); // Short delay to prevent false click detection
+    });
 
 const createScene = async function () {
   const scene = new BABYLON.Scene(engine);
@@ -117,6 +129,8 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
+
 
 
 
