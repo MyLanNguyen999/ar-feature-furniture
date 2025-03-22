@@ -87,43 +87,22 @@ const createScene = async function () {
 
   // @function to apply a texture onto sofa
   async function applyTextureToSofa(sofaMesh, scene) {
-    if (!sofaMesh) {
-      console.error("❌ Sofa model not found!");
-      return;
-    }
+    if (!sofaMesh) return;
 
-    // ✅ Check if the model has UV mapping
-    if (!sofaMesh.getVerticesData(BABYLON.VertexBuffer.UVKind)) {
-      console.error(
-        "❌ UV mapping missing! The texture may not appear correctly."
-      );
-      return;
-    }
+    let newMaterial = new BABYLON.StandardMaterial("sofaMaterial", scene);
 
-    // ✅ Create a new material
-    let sofaMaterial = new BABYLON.StandardMaterial("sofaMaterial", scene);
+    // Use a projected texture instead of UV mapping
+    let texture = new BABYLON.Texture("./meshes/texture-1.png", scene);
+    newMaterial.diffuseTexture = texture;
 
-    // ✅ Load the PNG texture
-    let sofaTexture = new BABYLON.Texture("./meshes/texture-1.png", scene);
-    sofaMaterial.diffuseTexture = sofaTexture;
+    // Enable tri-planar mapping (this works without UVs)
+    newMaterial.diffuseTexture.uScale = 1;
+    newMaterial.diffuseTexture.vScale = 1;
 
-    // ✅ Enable better lighting (optional)
-    sofaMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Remove unwanted shine
-    sofaMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1); // Make the texture more visible
-
-    // ✅ Debugging: Check if the texture is loading correctly
-    sofaTexture.onLoadObservable.add(() => {
-      console.log("✅ Texture loaded successfully!");
-    });
-
-    sofaTexture.onErrorObservable.add((message, exception) => {
-      console.error("❌ Error loading texture:", message, exception);
-    });
-
-    // ✅ Apply the material to the sofa mesh
-    sofaMesh.material = sofaMaterial;
-    console.log("✅ Texture applied to the sofa!");
+    // Apply material to the sofa
+    sofaMesh.material = newMaterial;
   }
+
 
 
 
@@ -229,6 +208,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
 
 
 
