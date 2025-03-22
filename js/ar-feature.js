@@ -5,12 +5,71 @@ const canvas = document.getElementById("renderCanvas");
 const engine = new BABYLON.Engine(canvas, true);
 
 // generate createScene function
-const createScene = async function () {
-  // create a new BABYLON scene, passing in the engine as an argument
-  const scene = new BABYLON.Scene(engine);
+// const createScene = async function () {
+//   // create a new BABYLON scene, passing in the engine as an argument
+//   const scene = new BABYLON.Scene(engine);
 
-  // change the color of the scene background
-  scene.clearColor = new BABYLON.Color4(0.1, 0.2, 0.1, 1);
+//   // change the color of the scene background
+//   scene.clearColor = new BABYLON.Color4(0.1, 0.2, 0.1, 1);
+
+//   !! new scene function for click and change
+const sofaModels = ["sofa.glb", "sofa-1.glb", "sofa-2.glb"]; // Add more models if needed
+let currentSofaIndex = 0;
+let sofaMesh;
+
+async function loadSofa(scene) {
+    // Remove the current sofa if it exists
+    if (sofaMesh) {
+        sofaMesh.dispose();
+    }
+
+    // Get the next sofa model in the loop
+    currentSofaIndex = (currentSofaIndex + 1) % sofaModels.length;
+    let sofaFile = sofaModels[currentSofaIndex];
+
+    console.log(`Loading: ${sofaFile}`);
+
+    // Load the new sofa model
+    const result = await BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", sofaFile, scene);
+    sofaMesh = result.meshes[0];
+
+    // Set position, scaling, and rotation
+    sofaMesh.position = new BABYLON.Vector3(0, 1, 0);
+    sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
+    sofaMesh.rotation.y = Math.PI;
+    sofaMesh.scaling.z = -1;
+
+    // Apply interaction
+    sofaMesh.actionManager = new BABYLON.ActionManager(scene);
+    sofaMesh.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, () => {
+            loadSofa(scene);
+        })
+    );
+}
+
+const createScene = async function () {
+    const scene = new BABYLON.Scene(engine);
+    scene.clearColor = new BABYLON.Color4(0.1, 0.2, 0.1, 1);
+
+    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, Math.PI / 2, 2, BABYLON.Vector3.Zero(), scene);
+    camera.attachControl(canvas, true);
+
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+    light.intensity = 0.7;
+
+    const hdrTexture = await BABYLON.CubeTexture.CreateFromPrefilteredData(
+        "https://playground.babylonjs.com/textures/environment.env",
+        scene
+    );
+    scene.environmentTexture = hdrTexture;
+
+    // Load the first sofa
+    await loadSofa(scene);
+
+    return scene;
+};
+// !! end of new scene function for click and change
 
   //* CAMERA *//
   // add camera to the canvas
@@ -47,27 +106,11 @@ const createScene = async function () {
   // source: https://sketchfab.com/3d-models/sofa-80edec2de8c04a4fb335a48b550a2336
   // source: https://sketchfab.com/3d-models/grey-sofa-e94e15859aff4c5ebf4791c46ab8ba42
 
-  //! const sofa = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa.glb", scene)
-  //     .then((result) => {
-  //         let sofaMesh = result.meshes[0];
-
-  //         //position the sofa
-  //         sofaMesh.position = new BABYLON.Vector3(0, 1, 0);
-
-  //         // scale the sofa
-  //         sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
-
-  //         //* ROTATION *//
-  //         sofaMesh.rotation.y = Math.PI;
-  //         sofaMesh.scaling.z = -1;
-  //     });
-
-  // !new ver
   let sofaMesh;
   await BABYLON.SceneLoader.ImportMeshAsync(
     "",
     "./meshes/",
-    "sofa-texture.glb",
+    "sofa.glb",
     scene
   ).then((result) => {
     sofaMesh = result.meshes[0];
@@ -76,50 +119,11 @@ const createScene = async function () {
     sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
     sofaMesh.rotation.y = Math.PI;
     sofaMesh.scaling.z = -1;
-    console.log("Sofa Mesh:", sofaMesh);
-    console.log("Material:", sofaMesh.material);
-    console.log(
-      "UV Mapping:",
-      sofaMesh.getVerticesData(BABYLON.VertexBuffer.UV)
     );
-
-
-    // * TEXTURE *//
-    // Apply a texture to the sofa
-    applyTextureToSofa(sofaMesh, scene);
 
   });
 
   
-
-  // @function to apply a texture onto sofa
-  async function applyTextureToSofa(sofaMesh, scene) {
-    if (!sofaMesh) return;
-
-    let newMaterial = new BABYLON.StandardMaterial("sofaMaterial", scene);
-    let texture = new BABYLON.Texture("./meshes/texture-1.png", scene);
-
-    newMaterial.diffuseTexture = texture;
-    newMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Remove extra shininess
-
-    // Assign the new material to each mesh in the model
-    sofaMesh.getChildMeshes().forEach((mesh) => {
-      if (!mesh.material) {
-        // If there's no material, assign our new one
-        console.log(`Assigning new material to: ${mesh.name}`);
-        mesh.material = newMaterial;
-      }
-    });
-
-    console.log("Material successfully assigned!");
-  }
-
-
-
-
-
-
-
   // * ADD WebXR *//
   const xr = await scene.createDefaultXRExperienceAsync({
     uiOptions: {
