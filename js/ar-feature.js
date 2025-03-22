@@ -64,8 +64,8 @@ const createScene = async function () {
         sessionMode: "immersive-ar",
         ReferenceSpaceType: "local-floor", // viewer, local, local-floor, bounded-floor, or unbounded
       },
-    //   optionalFeatures: ["hit-test", "anchor"],
-        optionalFeatures: true,
+      optionalFeatures: ["hit-test", "anchor"],
+        // optionalFeatures: true,
     });
 
     // * HIT TEST *//
