@@ -36,7 +36,10 @@ const createScene = async function () {
     light.intensity = 0.7;
 
     // Add an HDR environment texture for proper lighting
-    const hdrTexture = await BABYLON.CubeTexture.CreateFromPrefilteredData("https://playground.babylonjs.com/textures/environment.env", scene);
+    const hdrTexture = await BABYLON.CubeTexture.CreateFromPrefilteredData(
+      "https://playground.babylonjs.com/textures/environment.env",
+      scene
+    );
     scene.environmentTexture = hdrTexture;
 
     // * MESH *//
@@ -159,6 +162,7 @@ window.addEventListener("resize", () => {
 document.getElementById("startXR").addEventListener("click", async () => {
   await xr.baseExperience.enterXRAsync("immersive-ar", "local-floor");
 });
+
 
 
 
