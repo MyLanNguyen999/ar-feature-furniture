@@ -74,6 +74,29 @@ const createScene = async function () {
             sofaMesh.scaling.z = -1;
         });
 
+    // @apply a texture onto sofa
+    async function applyTextureToSofa(sofaMesh, scene) {
+      if (!sofaMesh) return;
+
+      // Load the texture model
+      let result = await BABYLON.SceneLoader.ImportMeshAsync(
+        "",
+        "./meshes/",
+        "texture-1.glb",
+        scene
+      );
+      applyTextureToSofa(sofaMesh, scene);
+
+      // Get the material from the loaded model
+      let textureMesh = result.meshes[0];
+      let newMaterial = textureMesh.material;
+
+      if (newMaterial) {
+        sofaMesh.material = newMaterial; // Apply the new material
+      }
+    }
+
+
 
     // * ADD WebXR *//
     const xr = await scene.createDefaultXRExperienceAsync({
@@ -176,6 +199,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
 
 
 
