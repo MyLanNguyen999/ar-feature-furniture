@@ -93,7 +93,7 @@ const createScene = async function () {
     let result = await BABYLON.SceneLoader.ImportMeshAsync(
       "",
       "./meshes/",
-      "texture-1.glb",
+      "texture-1.png",
       scene
     );
 
