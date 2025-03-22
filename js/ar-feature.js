@@ -89,12 +89,12 @@ const createScene = async function () {
   async function applyTextureToSofa(sofaMesh, scene) {
     if (!sofaMesh) return;
 
-    // Load the texture model
-    let result = await BABYLON.SceneLoader.ImportMeshAsync(
-      "",
-      "./meshes/",
-      "texture-1.png",
-      scene
+    // Create a new material
+    let newMaterial = new BABYLON.StandardMaterial("sofaMaterial", scene);
+    newMaterial.diffuseTexture = new BABYLON.Texture("./meshes/texture-1.png", scene);
+
+    // Apply the material to the sofa
+    sofaMesh.material = newMaterial;
     );
 
     // Get the material from the loaded model
