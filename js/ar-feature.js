@@ -42,9 +42,25 @@ async function loadSofa(scene) {
 
   console.log("✅ Sofa loaded and ready to be clicked!");
 
-//   Make the sofa grabbable
-const dragBehavior = new BABYLON.SixDofDragBehavior();
-sofaMesh.addBehavior(dragBehavior);
+  // 🔥 **Lock initial transform before adding behaviors**
+  sofaMesh.bakeCurrentTransformIntoVertices();
+
+  console.log("✅ Sofa loaded!");
+
+  //   Make the sofa grabbable
+  const dragBehavior = new BABYLON.SixDofDragBehavior();
+  sofaMesh.addBehavior(dragBehavior);
+
+  // Track dragging state
+  dragBehavior.onDragStartObservable.add(() => {
+    isDragging = true;
+  });
+
+  dragBehavior.onDragEndObservable.add(() => {
+    setTimeout(() => {
+      isDragging = false;
+    }, 200); // Prevent accidental clicks right after dragging
+  });
 }
 
 const createScene = async function () {
@@ -80,19 +96,19 @@ const createScene = async function () {
   // Load the first sofa
   await loadSofa(scene);
 
-  // 🔥 Click listener for mesh picking
-  scene.onPointerDown = function (evt, pickResult) {
-    console.log("🖱 Click detected!");
-    if (pickResult.hit) {
-      console.log("✅ Object clicked:", pickResult.pickedMesh.name);
-      if (pickResult.pickedMesh === sofaMesh) {
-        console.log("🔄 Changing sofa...");
-        loadSofa(scene);
-      }
-    } else {
-      console.log("❌ No object clicked.");
-    }
-  };
+  // 🔥 Click listener for mesh picking - FOR DEBUGGING
+//   scene.onPointerDown = function (evt, pickResult) {
+//     console.log("🖱 Click detected!");
+//     if (pickResult.hit) {
+//       console.log("✅ Object clicked:", pickResult.pickedMesh.name);
+//       if (pickResult.pickedMesh === sofaMesh) {
+//         console.log("🔄 Changing sofa...");
+//         loadSofa(scene);
+//       }
+//     } else {
+//       console.log("❌ No object clicked.");
+//     }
+//   };
 
 //   Enable AR
 const xr = await scene.createDefaultXRExperienceAsync({
@@ -118,6 +134,8 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
+
 
 
 
