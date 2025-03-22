@@ -89,6 +89,15 @@ const createScene = async function () {
     }
   };
 
+//   Enable AR
+const xr = await scene.createDefaultXRExperienceAsync({
+  uiOptions: {
+    sessionMode: "immersive-ar",
+    referenceSpaceType: "local-floor", //viewer, local, local-floor, bounded-floor, or unbounded
+  },
+  optionalFeatures: true,
+});
+
   return scene;
 };
 
@@ -103,4 +112,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
+
+
 
