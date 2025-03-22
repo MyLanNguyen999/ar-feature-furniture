@@ -40,35 +40,36 @@ async function loadSofa(scene) {
   sofaMesh.rotation.y = Math.PI;
   sofaMesh.scaling.z = -1;
 
-  // Lock initial transform
-  sofaMesh.bakeCurrentTransformIntoVertices();
+//  !adding the code below will make the sofa draggable but stop the click function to change the sofa 
+//   // Lock initial transform
+//   sofaMesh.bakeCurrentTransformIntoVertices();
 
-  console.log("✅ Sofa loaded!");
+//   console.log("✅ Sofa loaded!");
 
-  // ✅ Make sofa draggable
-  const dragBehavior = new BABYLON.SixDofDragBehavior();
-  sofaMesh.addBehavior(dragBehavior);
+//   // ✅ Make sofa draggable
+//   const dragBehavior = new BABYLON.SixDofDragBehavior();
+//   sofaMesh.addBehavior(dragBehavior);
 
-  // Track dragging state
-  dragBehavior.onDragStartObservable.add(() => {
-    isDragging = true;
-  });
+//   // Track dragging state
+//   dragBehavior.onDragStartObservable.add(() => {
+//     isDragging = true;
+//   });
 
-  dragBehavior.onDragEndObservable.add(() => {
-    setTimeout(() => {
-      isDragging = false;
-    }, 200); // Prevent accidental clicks right after dragging
-  });
+//   dragBehavior.onDragEndObservable.add(() => {
+//     setTimeout(() => {
+//       isDragging = false;
+//     }, 200); // Prevent accidental clicks right after dragging
+//   });
 
-  // ✅ Add click event
-  sofaMesh.actionManager = new BABYLON.ActionManager(scene);
-  sofaMesh.actionManager.registerAction(
-    new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, () => {
-      if (!isDragging) {
-        loadSofa(scene); // Change sofa only if NOT dragging
-      }
-    })
-  );
+//   // ✅ Add click event
+//   sofaMesh.actionManager = new BABYLON.ActionManager(scene);
+//   sofaMesh.actionManager.registerAction(
+//     new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, () => {
+//       if (!isDragging) {
+//         loadSofa(scene); // Change sofa only if NOT dragging
+//       }
+//     })
+//   );
 }
 
 const createScene = async function () {
