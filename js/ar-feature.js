@@ -40,6 +40,10 @@ async function loadSofa(scene) {
   sofaMesh.scaling.z = -1;
 
   console.log("✅ Sofa loaded and ready to be clicked!");
+
+//   Make the sofa grabbable
+const dragBehavior = new BABYLON.SixDofDragBehavior();
+sofaMesh.addBehavior(dragBehavior);
 }
 
 const createScene = async function () {
@@ -98,8 +102,6 @@ const xr = await scene.createDefaultXRExperienceAsync({
   optionalFeatures: true,
 });
 
-// Make the sofa grabbable
-sofaMesh.bakeCurrentTransformIntoVertices().addBehavior(new BABYLON.SixDofDragBehavior());
 
   return scene;
 };
@@ -115,6 +117,8 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
+
 
 
 
