@@ -67,6 +67,10 @@ const createScene = async function () {
       optionalFeatures: ["hit-test", "anchor"],
         // optionalFeatures: true,
     });
+    if (!xr.baseExperience) {
+      console.error("WebXR base experience failed to initialize.");
+      return;
+    }
 
     // * HIT TEST *//
 
@@ -139,10 +143,10 @@ const createScene = async function () {
 
 // * RENDER SCENE *//
 // Render the scene in loop
-createScene().then((sceneToREnder) => {
-    engine.runRenderLoop(() => {
-        sceneToREnder.render();
-    });
+createScene().then((sceneToRender) => {
+  engine.runRenderLoop(() => {
+    sceneToRender.render();
+  });
 });
 
 // * RESIZE *//
@@ -150,6 +154,12 @@ createScene().then((sceneToREnder) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
+// add functionality to start AR button
+document.getElementById("startXR").addEventListener("click", async () => {
+  await xr.baseExperience.enterXRAsync("immersive-ar", "local-floor");
+});
+
 
 
 
