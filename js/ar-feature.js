@@ -85,7 +85,7 @@ const createScene = async function () {
         "texture-1.glb",
         scene
       );
-      applyTextureToSofa(sofaMesh, scene);
+      
 
       // Get the material from the loaded model
       let textureMesh = result.meshes[0];
@@ -186,6 +186,10 @@ const createScene = async function () {
     return scene;
 };
 
+// * TEXTURE *//
+// Apply a texture to the sofa
+applyTextureToSofa(sofaMesh, scene);
+
 // * RENDER SCENE *//
 // Render the scene in loop
 createScene().then((sceneToRender) => {
@@ -199,6 +203,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
 
 
 
