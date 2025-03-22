@@ -89,19 +89,22 @@ const createScene = async function () {
   async function applyTextureToSofa(sofaMesh, scene) {
     if (!sofaMesh) return;
 
-    let newMaterial = new BABYLON.StandardMaterial("sofaMaterial", scene);
+    // Check if the sofa already has materials
+    let sofaMaterial =
+      sofaMesh.material || new BABYLON.StandardMaterial("sofaMaterial", scene);
 
-    // Use a projected texture instead of UV mapping
+    // Apply the texture
     let texture = new BABYLON.Texture("./meshes/texture-1.png", scene);
-    newMaterial.diffuseTexture = texture;
+    sofaMaterial.diffuseTexture = texture;
 
-    // Enable tri-planar mapping (this works without UVs)
-    newMaterial.diffuseTexture.uScale = 1;
-    newMaterial.diffuseTexture.vScale = 1;
+    // Ensure the texture properly maps
+    sofaMaterial.diffuseTexture.uScale = 1;
+    sofaMaterial.diffuseTexture.vScale = 1;
 
-    // Apply material to the sofa
-    sofaMesh.material = newMaterial;
+    // Assign the modified material back to the sofa
+    sofaMesh.material = sofaMaterial;
   }
+
 
 
 
@@ -208,6 +211,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
 
 
 
