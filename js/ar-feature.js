@@ -91,19 +91,13 @@ const createScene = async function () {
 
     // Create a new material
     let newMaterial = new BABYLON.StandardMaterial("sofaMaterial", scene);
-    newMaterial.diffuseTexture = new BABYLON.Texture("./meshes/texture-1.png", scene);
+    newMaterial.diffuseTexture = new BABYLON.Texture(
+      "./meshes/texture-1.png",
+      scene
+    );
 
     // Apply the material to the sofa
     sofaMesh.material = newMaterial;
-    );
-
-    // Get the material from the loaded model
-    let textureMesh = result.meshes[0];
-    let newMaterial = textureMesh.material;
-
-    if (newMaterial) {
-      sofaMesh.material = newMaterial; // Apply the new material
-    }
   }
 
   // * ADD WebXR *//
@@ -208,6 +202,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
 
 
 
