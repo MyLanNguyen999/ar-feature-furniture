@@ -46,20 +46,34 @@ const createScene = async function () {
     // add a 3D model of a sofa using ImportMeshAsync method
     // source: https://sketchfab.com/3d-models/sofa-80edec2de8c04a4fb335a48b550a2336
     // source: https://sketchfab.com/3d-models/grey-sofa-e94e15859aff4c5ebf4791c46ab8ba42
-    const sofa = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa.glb", scene)
+
+    //! const sofa = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa.glb", scene)
+    //     .then((result) => {
+    //         let sofaMesh = result.meshes[0];
+
+    //         //position the sofa
+    //         sofaMesh.position = new BABYLON.Vector3(0, 1, 0);
+
+    //         // scale the sofa
+    //         sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
+
+    //         //* ROTATION *//
+    //         sofaMesh.rotation.y = Math.PI;
+    //         sofaMesh.scaling.z = -1;
+    //     });
+
+    // !new ver
+    let sofaMesh;
+    await BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "sofa.glb", scene)
         .then((result) => {
-            let sofaMesh = result.meshes[0];
+            sofaMesh = result.meshes[0];
 
-            //position the sofa
             sofaMesh.position = new BABYLON.Vector3(0, 1, 0);
-
-            // scale the sofa
             sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
-
-            //* ROTATION *//
             sofaMesh.rotation.y = Math.PI;
             sofaMesh.scaling.z = -1;
         });
+
 
     // * ADD WebXR *//
     const xr = await scene.createDefaultXRExperienceAsync({
