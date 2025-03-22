@@ -76,6 +76,13 @@ const createScene = async function () {
     sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
     sofaMesh.rotation.y = Math.PI;
     sofaMesh.scaling.z = -1;
+    console.log("Sofa Mesh:", sofaMesh);
+    console.log("Material:", sofaMesh.material);
+    console.log(
+      "UV Mapping:",
+      sofaMesh.getVerticesData(BABYLON.VertexBuffer.UV)
+    );
+
 
     // * TEXTURE *//
     // Apply a texture to the sofa
@@ -209,6 +216,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
 
 
 
