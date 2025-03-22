@@ -76,18 +76,18 @@ const createScene = async function () {
   await loadSofa(scene);
 
   // 🔥 Click listener for mesh picking - FOR DEBUGGING
-//   scene.onPointerDown = function (evt, pickResult) {
-//     console.log("🖱 Click detected!");
-//     if (pickResult.hit) {
-//       console.log("✅ Object clicked:", pickResult.pickedMesh.name);
-//       if (pickResult.pickedMesh === sofaMesh) {
-//         console.log("🔄 Changing sofa...");
-//         loadSofa(scene);
-//       }
-//     } else {
-//       console.log("❌ No object clicked.");
-//     }
-//   };
+  scene.onPointerDown = function (evt, pickResult) {
+    console.log("🖱 Click detected!");
+    if (pickResult.hit) {
+      console.log("✅ Object clicked:", pickResult.pickedMesh.name);
+      if (pickResult.pickedMesh === sofaMesh) {
+        console.log("🔄 Changing sofa...");
+        loadSofa(scene);
+      }
+    } else {
+      console.log("❌ No object clicked.");
+    }
+  };
 
 //   Enable AR
 const xr = await scene.createDefaultXRExperienceAsync({
