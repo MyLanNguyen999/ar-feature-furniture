@@ -61,6 +61,15 @@ async function loadSofa(scene) {
       isDragging = false;
     }, 200); // Prevent accidental clicks right after dragging
   });
+  // ✅ Add click event
+  sofaMesh.actionManager = new BABYLON.ActionManager(scene);
+  sofaMesh.actionManager.registerAction(
+    new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, () => {
+      if (!isDragging) {
+        loadSofa(scene); // Change sofa only if NOT dragging
+      }
+    })
+  );
 }
 
 const createScene = async function () {
@@ -134,6 +143,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
 
 
 
