@@ -60,10 +60,12 @@ const createScene = async function () {
 
     // * ADD WebXR *//
     const xr = await scene.createDefaultXRExperienceAsync({
-        uiOptions: {
-            sessionMode: "immersive-ar",
-        },
-        optionalFeatures: ["hit-test", "anchor"],
+      uiOptions: {
+        sessionMode: "immersive-ar",
+        ReferenceSpaceType: "local-floor", // viewer, local, local-floor, bounded-floor, or unbounded
+      },
+    //   optionalFeatures: ["hit-test", "anchor"],
+        optionalFeatures: true;
     });
 
     // * HIT TEST *//
@@ -124,6 +126,13 @@ const createScene = async function () {
         };
     });
 
+    // * INTERACTIONS *//
+    // Add an action manager to the sofa mesh
+    sofa.actionManager = new BABYLON.ActionManager(scene);
+
+    // Make the sofa moveable
+    sofa.bakeCurrentTransformIntoVertices().addBehavior(new BABYLON.SixDofDragBehavior());
+
     // * RETURN SCENE *//
     return scene;
 };
@@ -141,6 +150,7 @@ createScene().then((sceneToREnder) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
 
 
 
