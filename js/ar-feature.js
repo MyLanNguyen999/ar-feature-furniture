@@ -89,16 +89,27 @@ const createScene = async function () {
   async function applyTextureToSofa(sofaMesh, scene) {
     if (!sofaMesh) return;
 
-    // Create a new material
-    let newMaterial = new BABYLON.StandardMaterial("sofaMaterial", scene);
-    newMaterial.diffuseTexture = new BABYLON.Texture(
-      "./meshes/texture-1.png",
-      scene
+    // load the png image
+    BABYLON.Image.Load("./meshes/texture-1.png", function (img) {
+        // Create a new material
+        let newMaterial = new BABYLON.StandardMaterial("sofaMaterial", scene);
+        newMaterial.diffuseTexture = new BABYLON.Texture(
+        "./meshes/texture-1.png",
+        scene
+        );
+
+        // set the diffuser texture
+        newMaterial.diffuseTexture = new BABYLON.Texture(img.src, scene);
+
+        // Apply the material to the sofa
+        sofaMesh.material = newMaterial;
+    }
     );
 
     // Apply the material to the sofa
     sofaMesh.material = newMaterial;
-  }
+}
+
 
   // * ADD WebXR *//
   const xr = await scene.createDefaultXRExperienceAsync({
