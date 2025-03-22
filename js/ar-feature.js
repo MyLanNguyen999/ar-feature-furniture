@@ -65,10 +65,11 @@ const createScene = async function () {
     const xr = await scene.createDefaultXRExperienceAsync({
       uiOptions: {
         sessionMode: "immersive-ar",
-        ReferenceSpaceType: "local-floor", // viewer, local, local-floor, bounded-floor, or unbounded
+        referenceSpaceType: "local-floor",
+        // viewer, local, local-floor, bounded-floor, or unbounded
       },
       optionalFeatures: ["hit-test", "anchor"],
-        // optionalFeatures: true,
+      // optionalFeatures: true,
     });
     if (!xr.baseExperience) {
       console.error("WebXR base experience failed to initialize.");
@@ -125,7 +126,7 @@ const createScene = async function () {
                 .addAnchorPointUsingHitTestResultAsync(latestHitTestResults[0])
                 .then((anchor) => {
                     // Attach sofa to anchor
-                    anchor.attachedNode = sofa;
+                    anchor.attachedNode = sofaMesh;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -138,7 +139,11 @@ const createScene = async function () {
     // sofa.actionManager = new BABYLON.ActionManager(scene);
 
     // Make the sofa moveable
-    sofa.bakeCurrentTransformIntoVertices().addBehavior(new BABYLON.SixDofDragBehavior());
+    if (sofaMesh) {
+      sofaMesh.bakeCurrentTransformIntoVertices();
+      sofaMesh.addBehavior(new BABYLON.SixDofDragBehavior());
+    }
+
 
     // * RETURN SCENE *//
     return scene;
@@ -157,6 +162,8 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
+
 
 
 
