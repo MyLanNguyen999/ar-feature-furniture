@@ -67,7 +67,7 @@ const createScene = async function () {
   await BABYLON.SceneLoader.ImportMeshAsync(
     "",
     "./meshes/",
-    "sofa.glb",
+    "indochine_sofa.glb",
     scene
   ).then((result) => {
     sofaMesh = result.meshes[0];
