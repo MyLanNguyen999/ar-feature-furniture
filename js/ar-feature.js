@@ -96,22 +96,24 @@ const createScene = async function () {
   async function applyTextureToSofa(sofaMesh, scene) {
     if (!sofaMesh) return;
 
+    let newMaterial = new BABYLON.StandardMaterial("sofaMaterial", scene);
     let texture = new BABYLON.Texture("./meshes/texture-1.png", scene);
-    texture.onLoadObservable.add(() => {
-      console.log("Texture loaded successfully!");
-    });
 
+    newMaterial.diffuseTexture = texture;
+    newMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Remove extra shininess
 
-    // Loop through each sub-mesh
+    // Assign the new material to each mesh in the model
     sofaMesh.getChildMeshes().forEach((mesh) => {
-      if (mesh.material) {
-        console.log(`Applying texture to: ${mesh.name}`);
-        mesh.material.diffuseTexture = texture;
-      } else {
-        console.warn(`No material found on ${mesh.name}`);
+      if (!mesh.material) {
+        // If there's no material, assign our new one
+        console.log(`Assigning new material to: ${mesh.name}`);
+        mesh.material = newMaterial;
       }
     });
+
+    console.log("Material successfully assigned!");
   }
+
 
 
 
@@ -220,6 +222,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
 
 
 
