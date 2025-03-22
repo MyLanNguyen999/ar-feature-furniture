@@ -135,7 +135,7 @@ const createScene = async function () {
 
     // * INTERACTIONS *//
     // Add an action manager to the sofa mesh
-    sofa.actionManager = new BABYLON.ActionManager(scene);
+    // sofa.actionManager = new BABYLON.ActionManager(scene);
 
     // Make the sofa moveable
     sofa.bakeCurrentTransformIntoVertices().addBehavior(new BABYLON.SixDofDragBehavior());
@@ -158,10 +158,6 @@ window.addEventListener("resize", () => {
     engine.resize();
 });
 
-// add functionality to start AR button
-document.getElementById("startXR").addEventListener("click", async () => {
-  await xr.baseExperience.enterXRAsync("immersive-ar", "local-floor");
-});
 
 
 
