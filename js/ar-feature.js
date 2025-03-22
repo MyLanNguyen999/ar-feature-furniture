@@ -48,7 +48,7 @@ const createScene = async function () {
             let sofaMesh = result.meshes[0];
 
             //position the sofa
-            sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
+            sofaMesh.position = new BABYLON.Vector3(0, 10, 0);
 
             // scale the sofa
             sofaMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
