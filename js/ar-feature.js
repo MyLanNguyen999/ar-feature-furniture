@@ -29,13 +29,17 @@ async function loadSofa(scene) {
   sofaMesh.rotation.y = Math.PI;
   sofaMesh.scaling.z = -1;
 
-  // Add click action to change the sofa
-  sofaMesh.actionManager = new BABYLON.ActionManager(scene);
-  sofaMesh.actionManager.registerAction(
-    new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, () => {
+  // ✅ Ensure the action manager is set on the scene
+  if (!scene.actionManager) {
+    scene.actionManager = new BABYLON.ActionManager(scene);
+  }
+
+  // ✅ Use scene.onPointerDown to detect clicks
+  scene.onPointerDown = function (evt, pickResult) {
+    if (pickResult.hit && pickResult.pickedMesh === sofaMesh) {
       loadSofa(scene);
-    })
-  );
+    }
+  };
 }
 
 const createScene = async function () {
@@ -70,72 +74,6 @@ const createScene = async function () {
 
   // Load the first sofa
   await loadSofa(scene);
-
-  // WebXR Setup
-  const xr = await scene.createDefaultXRExperienceAsync({
-    uiOptions: {
-      sessionMode: "immersive-ar",
-      referenceSpaceType: "local-floor",
-    },
-    optionalFeatures: ["hit-test", "anchor"],
-  });
-
-  if (!xr.baseExperience) {
-    console.error("WebXR base experience failed to initialize.");
-    return scene;
-  }
-
-  // HIT TEST
-  const hitTest = await xr.baseExperience.featuresManager.enableFeature(
-    BABYLON.WebXRHitTest,
-    "latest"
-  );
-
-  const marker = BABYLON.MeshBuilder.CreateTorus(
-    "marker",
-    { diameter: 0.15, thickness: 0.05 },
-    scene
-  );
-  marker.isVisible = false;
-  marker.rotationQuaternion = new BABYLON.Quaternion();
-
-  let latestHitTestResults = null;
-
-  hitTest.onHitTestResultObservable.add((results) => {
-    if (results.length) {
-      marker.isVisible = true;
-      results[0].transformationMatrix.decompose(
-        marker.scaling,
-        marker.rotationQuaternion,
-        marker.position
-      );
-      latestHitTestResults = results;
-    } else {
-      marker.isVisible = false;
-      latestHitTestResults = null;
-    }
-  });
-
-  // ANCHOR SYSTEM
-  const anchors = xr.baseExperience.featuresManager.enableFeature(
-    BABYLON.WebXRAnchorSystem,
-    "latest"
-  );
-
-  canvas.addEventListener("click", () => {
-    if (latestHitTestResults && latestHitTestResults.length > 0) {
-      anchors
-        .addAnchorPointUsingHitTestResultAsync(latestHitTestResults[0])
-        .then((anchor) => {
-          if (sofaMesh) {
-            anchor.attachedNode = sofaMesh;
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  });
 
   return scene;
 };
