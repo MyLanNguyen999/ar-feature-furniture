@@ -65,7 +65,7 @@ const createScene = async function () {
         ReferenceSpaceType: "local-floor", // viewer, local, local-floor, bounded-floor, or unbounded
       },
     //   optionalFeatures: ["hit-test", "anchor"],
-        optionalFeatures: true;
+        optionalFeatures: true,
     });
 
     // * HIT TEST *//
