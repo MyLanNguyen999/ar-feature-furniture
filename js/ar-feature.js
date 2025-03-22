@@ -67,7 +67,7 @@ const createScene = async function () {
   await BABYLON.SceneLoader.ImportMeshAsync(
     "",
     "./meshes/",
-    "indochine_sofa.glb",
+    "modern_sofa.glb",
     scene
   ).then((result) => {
     sofaMesh = result.meshes[0];
@@ -97,6 +97,10 @@ const createScene = async function () {
     if (!sofaMesh) return;
 
     let texture = new BABYLON.Texture("./meshes/texture-1.png", scene);
+    texture.onLoadObservable.add(() => {
+      console.log("Texture loaded successfully!");
+    });
+
 
     // Loop through each sub-mesh
     sofaMesh.getChildMeshes().forEach((mesh) => {
@@ -216,6 +220,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
 
 
 
