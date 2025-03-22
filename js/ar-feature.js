@@ -46,30 +46,6 @@ async function loadSofa(scene) {
 const dragBehavior = new BABYLON.SixDofDragBehavior();
 sofaMesh.addBehavior(dragBehavior);
 }
-// Track when dragging starts
-dragBehavior.onDragStartObservable.add(() => {
-        isDragging = true;
-    });
-
-    // Track when dragging ends
-dragBehavior.onDragEndObservable.add(() => {
-        setTimeout(() => {
-            isDragging = false;
-        }, 200); // Short delay to prevent false click detection
-    });
-// Handle clicks (change sofa if not dragged)
-function handleClick(scene) {
-    scene.onPointerDown = function (evt, pickResult) {
-        if (pickResult.hit && pickResult.pickedMesh === sofaMesh) {
-            setTimeout(() => {
-                if (!isDragging) {
-                    console.log("🔄 Changing sofa...");
-                    loadSofa(scene);
-                }
-            }, 100); // Small delay to ensure drag state is checked
-        }
-    };
-}
 
 const createScene = async function () {
   const scene = new BABYLON.Scene(engine);
