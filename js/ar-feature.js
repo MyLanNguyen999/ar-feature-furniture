@@ -37,7 +37,7 @@ async function loadSofa(scene) {
 
   // Ensure the sofa is visible and pickable
   sofaMesh.isPickable = true;
-  sofaMesh.position = new BABYLON.Vector3(0, 1, 0);
+  sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
   sofaMesh.scaling = new BABYLON.Vector3(1, 1, 1);
   sofaMesh.rotation.y = Math.PI;
   // sofaMesh.scaling.z = -1;
