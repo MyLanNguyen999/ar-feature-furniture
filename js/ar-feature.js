@@ -91,6 +91,62 @@ const createScene = async function () {
   // add drag action to table
   table.addBehavior(new BABYLON.SixDofDragBehavior());
 
+  // !test create a chair
+  // Create the seat of the chair
+  const seat = BABYLON.MeshBuilder.CreateBox(
+    "seat",
+    { width: 2, height: 0.5, depth: 2 },
+    scene
+  );
+  seat.position.y = 1; // Raise the seat above the ground
+  seat.material = new BABYLON.StandardMaterial("seatMat", scene);
+  seat.material.diffuseColor = new BABYLON.Color3(0.8, 0.5, 0.2); // Brown color
+
+  // Create the backrest
+  const backrest = BABYLON.MeshBuilder.CreateBox(
+    "backrest",
+    { width: 2, height: 2, depth: 0.3 },
+    scene
+  );
+  backrest.position.y = 2; // Position above the seat
+  backrest.position.z = -0.85; // Move it to the back of the seat
+  backrest.material = seat.material; // Use the same material
+
+  // Create the four legs
+  const legPositions = [
+    { x: -0.9, z: -0.9 },
+    { x: 0.9, z: -0.9 },
+    { x: -0.9, z: 0.9 },
+    { x: 0.9, z: 0.9 },
+  ];
+
+  const legMaterial = new BABYLON.StandardMaterial("legMat", scene);
+  legMaterial.diffuseColor = new BABYLON.Color3(0.5, 0.3, 0.1); // Darker brown color
+
+  legPositions.forEach((pos) => {
+    const leg = BABYLON.MeshBuilder.CreateCylinder(
+      "leg",
+      { height: 2, diameter: 0.3 },
+      scene
+    );
+    leg.position.set(pos.x, 0, pos.z); // Position legs at the corners
+    leg.material = legMaterial;
+  });
+
+  // Group all parts into a parent TransformNode
+  const chair = new BABYLON.TransformNode("chair", scene);
+  seat.parent = chair;
+  backrest.parent = chair;
+
+  scene.meshes.forEach((mesh) => {
+    if (mesh.name.includes("leg")) {
+      mesh.parent = chair;
+    }
+  });
+
+  chair.position.y = 1; // Lift the whole chair off the ground
+  // ! end of test chair
+
   // 🔥 Click listener for mesh picking - FOR DEBUGGING
   scene.onPointerDown = function (evt, pickResult) {
     console.log("🖱 Click detected!");
@@ -128,6 +184,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
 
 
 
