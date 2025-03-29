@@ -8,15 +8,6 @@ const sofaModels = ["sofa.glb", "sofa-1.glb", "sofa-2.glb"];
 let currentSofaIndex = -1; // Start at -1 so the first sofa is correctly loaded
 let sofaMesh = null;
 
-// accent chair array
-const accentChairModels = [
-  "accent-chair.glb",
-  "accent-chair-1.glb",
-  "accent-chair-2.glb",
-];
-let currentAccentChairIndex = -1; // Start at -1 so the first accent chair is correctly loaded
-let accentChairMesh = null;
-
 async function loadSofa(scene) {
   // Remove previous sofa if exists
   if (sofaMesh) {
@@ -28,8 +19,6 @@ async function loadSofa(scene) {
   currentSofaIndex = (currentSofaIndex + 1) % sofaModels.length;
   const sofaFile = sofaModels[currentSofaIndex];
 
-  currentAccentChairIndex = (currentAccentChairIndex + 1) % accentChairModels.length;
-  const accentChairFile = accentChairModels[currentAccentChairIndex];
 
   // console.log(`🔄 Loading: ${sofaFile}`);
 
@@ -41,13 +30,7 @@ async function loadSofa(scene) {
     scene
   );
 
-  // Load the accent chair
-  const accentChairResult = await BABYLON.SceneLoader.ImportMeshAsync(
-    "",
-    "./meshes/",
-    accentChairFile,
-    scene
-  );
+  
   // Select the correct mesh
   sofaMesh =
     result.meshes.find((mesh) => mesh.name !== "__root__") || result.meshes[0];
@@ -59,27 +42,7 @@ async function loadSofa(scene) {
   sofaMesh.rotation.y = Math.PI;
   // sofaMesh.scaling.z = -1;
 
-  // Select the correct accent chair mesh
-  accentChairMesh =
-    accentChairResult.meshes.find((mesh) => mesh.name !== "__root__") ||
-    accentChairResult.meshes[0];
-  // Ensure the accent chair is visible and pickable
-  accentChairMesh.isPickable = true;
-  accentChairMesh.position = new BABYLON.Vector3(0, 1, -1);
-  accentChairMesh.rotation = new BABYLON.Vector3(Math.PI/2. Math.PI, Math.PI/2);
-
-  // accentChairMesh.scaling = new BABYLON.Vector3(-10, -10, -10);
-  // accentChairMesh.rotation.y = Math.PI;
-  // accentChairMesh.scaling.z = -10;
-
-  // match scale of the sofa and the chair
-  const sofaBounds = sofaMesh.getBoundingInfo().boundingBox.extendSize;
-  const chairBounds = accentChairMesh.getBoundingInfo().boundingBox.extendSize;
-  const scaleFactor = sofaBounds.length() / chairBounds.length();
-  accentChairMesh.scaling = new BABYLON.Vector3(scaleFactor, scaleFactor, -scaleFactor);
-
-  // Add drag behavior
-  accentChairMesh.addBehavior(new BABYLON.SixDofDragBehavior());
+  
 }
 
 const createScene = async function () {
