@@ -89,7 +89,7 @@ const createScene = async function () {
   tableMat.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
   table.material = tableMat;
   table.position.y = 0.5;
-  table.position.z = -1;
+  table.position.z = 2;
 
   // 🔥 Click listener for mesh picking - FOR DEBUGGING
   scene.onPointerDown = function (evt, pickResult) {
