@@ -78,6 +78,19 @@ const createScene = async function () {
   // Load the first sofa
   await loadSofa(scene);
 
+  // testing a mesh table box
+  const table = BABYLON.MeshBuilder.CreateBox(
+    "table",
+    { size: 0.5 },
+    scene
+  );
+
+  const tableMat = new BABYLON.StandardMaterial("tableMat");
+  tableMat.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+  table.material = tableMat;
+  table.position.y = 0.5;
+  table.position.z = -1;
+
   // 🔥 Click listener for mesh picking - FOR DEBUGGING
   scene.onPointerDown = function (evt, pickResult) {
     console.log("🖱 Click detected!");
