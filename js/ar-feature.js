@@ -90,7 +90,7 @@ const createScene = async function () {
   table.material = tableMat;
   table.position.x = 0;
   table.position.y = 0;
-  table.position.z = 2;
+  table.position.z = 1;
 
   // 🔥 Click listener for mesh picking - FOR DEBUGGING
   scene.onPointerDown = function (evt, pickResult) {
