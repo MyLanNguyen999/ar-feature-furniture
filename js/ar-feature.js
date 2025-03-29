@@ -68,15 +68,17 @@ async function loadSofa(scene) {
   accentChairMesh.position = new BABYLON.Vector3(0, 1, -1);
   accentChairMesh.scaling = new BABYLON.Vector3(-10, -10, -10);
   accentChairMesh.rotation.y = Math.PI;
-  accentChairMesh.scaling.z = -1;
+
   // accent chair rotation
   accentChairMesh.rotation.x = Math.PI / 2;
   accentChairMesh.rotation.z = Math.PI / 2;
-  // accent chair scaling
-  accentChairMesh.scaling.x = 0.5;
+  
 
   // // add drag behavior
   // sofaMesh.bakeCurrentTransformIntoVertices().addBehavior(new BABYLON.SixDofDragBehavior());
+  accentChairMesh
+    .bakeCurrentTransformIntoVertices()
+    .addBehavior(new BABYLON.SixDofDragBehavior());
 }
 
 const createScene = async function () {
