@@ -120,6 +120,9 @@ const createScene = async function () {
   //   .bakeCurrentTransformIntoVertices()
   //   .addBehavior(new BABYLON.SixDofDragBehavior());
 
+  // add drag action to table
+  table.addBehavior(new BABYLON.SixDofDragBehavior());
+
   return scene;
 };
 
