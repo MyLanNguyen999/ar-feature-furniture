@@ -94,11 +94,10 @@ const createScene = async function () {
   // !test create a chair
   const chair = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "chair-1.glb").then((result) => { 
     const chairMesh = result.meshes[0];
-    chairMesh.position.x = -2;
+    chairMesh.position.x = 0;
     chairMesh.position.y = 0;
     chairMesh.position.z = 2;
     chairMesh.scaling = new BABYLON.Vector3(0.08, 0.08, 0.08);
-    chairMesh.rotation.x = Math.PI / 6;
 
   });
 
