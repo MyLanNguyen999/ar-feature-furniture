@@ -92,32 +92,32 @@ const createScene = async function () {
   table.addBehavior(new BABYLON.SixDofDragBehavior());
 
   // !test create a chair
-  // Create the seat of the chair
+  // Create the chair seat (matching table size)
   const seat = BABYLON.MeshBuilder.CreateBox(
     "seat",
-    { width: 1, height: 0.25, depth: 1 },
+    { width: 0.5, height: 0.1, depth: 0.5 },
     scene
   );
-  seat.position.y = 1; // Raise the seat above the ground
+  seat.position.y = 0.3; // Raise above ground
   seat.material = new BABYLON.StandardMaterial("seatMat", scene);
   seat.material.diffuseColor = new BABYLON.Color3(0.8, 0.5, 0.2); // Brown color
 
   // Create the backrest
   const backrest = BABYLON.MeshBuilder.CreateBox(
     "backrest",
-    { width: 1, height: 1, depth: 0.15 },
+    { width: 0.5, height: 0.3, depth: 0.05 },
     scene
   );
-  backrest.position.y = 2; // Position above the seat
-  backrest.position.z = -0.85; // Move it to the back of the seat
-  backrest.material = seat.material; // Use the same material
+  backrest.position.y = 0.45; // Above seat
+  backrest.position.z = -0.25; // Move to the back
+  backrest.material = seat.material; // Same material
 
-  // Create the four legs
+  // Create the four legs (scaled down)
   const legPositions = [
-    { x: -0.9, z: -0.9 },
-    { x: 0.9, z: -0.9 },
-    { x: -0.9, z: 0.9 },
-    { x: 0.9, z: 0.9 },
+    { x: -0.2, z: -0.2 },
+    { x: 0.2, z: -0.2 },
+    { x: -0.2, z: 0.2 },
+    { x: 0.2, z: 0.2 },
   ];
 
   const legMaterial = new BABYLON.StandardMaterial("legMat", scene);
@@ -126,14 +126,14 @@ const createScene = async function () {
   legPositions.forEach((pos) => {
     const leg = BABYLON.MeshBuilder.CreateCylinder(
       "leg",
-      { height: 1, diameter: 0.15 },
+      { height: 0.3, diameter: 0.05 },
       scene
     );
-    leg.position.set(pos.x, 0, pos.z); // Position legs at the corners
+    leg.position.set(pos.x, 0.15, pos.z); // Raise legs to match seat height
     leg.material = legMaterial;
   });
 
-  // Group all parts into a parent TransformNode
+  // Group into a parent TransformNode
   const chair = new BABYLON.TransformNode("chair", scene);
   seat.parent = chair;
   backrest.parent = chair;
@@ -144,7 +144,9 @@ const createScene = async function () {
     }
   });
 
-  chair.position.y = 1; // Lift the whole chair off the ground
+  // Position chair near the table
+  chair.position.set(0, 0, 0.7);
+
   // ! end of test chair
 
   // 🔥 Click listener for mesh picking - FOR DEBUGGING
@@ -184,6 +186,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
 
 
 
