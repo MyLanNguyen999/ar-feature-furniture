@@ -103,7 +103,7 @@ const createScene = async function () {
   });
 
   // add drab action to chair
-  chairMesh.addBehavior(new BABYLON.SixDofDragBehavior());
+  chair.bakeCurrentTransformIntoVetices().addBehavior(new BABYLON.SixDofDragBehavior());
 
   // ! end of test chair
 
