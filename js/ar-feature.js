@@ -98,7 +98,7 @@ const createScene = async function () {
     chairMesh.position.y = 0;
     chairMesh.position.z = 2;
     chairMesh.scaling = new BABYLON.Vector3(0.08, 0.08, 0.08);
-    chairMesh.rotation.x = Math.PI / 2;
+    chairMesh.rotation.y = Math.PI / 2;
 
   });
 
