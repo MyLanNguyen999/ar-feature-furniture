@@ -29,7 +29,7 @@ async function loadSofa(scene) {
     scene
   );
 
-  // Select the correct mesh (some .glb files have a root empty node)
+  // Select the correct mesh 
   sofaMesh =
     result.meshes.find((mesh) => mesh.name !== "__root__") || result.meshes[0];
 
@@ -40,6 +40,11 @@ async function loadSofa(scene) {
   sofaMesh.rotation.y = Math.PI;
   sofaMesh.scaling.z = -1;
 
+  // add drag behavior
+  const dragBehavior = new BABYLON.SixDofDragBehavior({ dragPlaneNormal: new BABYLON.Vector3(0, 1, 0) });
+  sofaMesh.addBehavior(dragBehavior);
+
+  
 //  !adding the code below will make the sofa draggable but stop the click function to change the sofa 
   // // Lock initial transform
   // sofaMesh.bakeCurrentTransformIntoVertices();
