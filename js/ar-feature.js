@@ -30,25 +30,35 @@ async function loadSofa(scene) {
     scene
   );
 
+  // ensure all meshes are pickable
+  result.meshes.forEach((mesh) => {
+    mesh.isPickable = true;
+  });
   
   // Select the correct mesh
   sofaMesh =
     result.meshes.find((mesh) => mesh.name !== "__root__") || result.meshes[0];
 
   // Ensure the sofa is visible and pickable
-  sofaMesh.isPickable = true;
+  // sofaMesh.isPickable = true;
   sofaMesh.position = new BABYLON.Vector3(0, 0, 0);
   sofaMesh.scaling = new BABYLON.Vector3(1, 1, 1);
   sofaMesh.rotation.y = Math.PI;
   // sofaMesh.scaling.z = -1;
 
   // ! test drag
-  let dragBehavior = new BABYLON.PointerDragBehavior({
-    dragPlaneNormal: new BABYLON.Vector3(0, 1, 0),
+  result.meshes.forEach((mesh) => { 
+    if (mesh instanceof BABYLON.Mesh) {
+      let dragBehavior = new BABYLON.PointerDragBehavior({
+      dragPlaneNormal: new BABYLON.Vector3(0, 1, 0)
+      });
+      mesh.addBehavior(dragBehavior);
+
+      let sixDofDrag = new BABYLON.SixDofDragBehavior();
+      mesh.addBehavior(sixDofDrag);
+    }
   });
-  sofaMesh.addBehavior(dragBehavior);
-  let sixDofDrag = new BABYLON.SixDofDragBehavior();
-  sofaMesh.addBehavior(sixDofDrag);
+  console.log(`Loaded: $(sofaFile)`);
 
   // ! end test
 
