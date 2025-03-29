@@ -88,7 +88,8 @@ const createScene = async function () {
   const tableMat = new BABYLON.StandardMaterial("tableMat");
   tableMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
   table.material = tableMat;
-  table.position.y = 0.5;
+  table.position.x = 0;
+  table.position.y = 0;
   table.position.z = 2;
 
   // 🔥 Click listener for mesh picking - FOR DEBUGGING
