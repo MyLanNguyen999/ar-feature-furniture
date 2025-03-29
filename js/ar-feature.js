@@ -79,11 +79,7 @@ const createScene = async function () {
   await loadSofa(scene);
 
   // testing a mesh table box
-  const table = BABYLON.MeshBuilder.CreateBox(
-    "table",
-    { size: 0.5 },
-    scene
-  );
+  const table = BABYLON.MeshBuilder.CreateBox("table", { size: 0.5 }, scene);
 
   const tableMat = new BABYLON.StandardMaterial("tableMat");
   tableMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
@@ -91,6 +87,9 @@ const createScene = async function () {
   table.position.x = 0;
   table.position.y = 0;
   table.position.z = 1;
+
+  // add drag action to table
+  table.addBehavior(new BABYLON.SixDofDragBehavior());
 
   // 🔥 Click listener for mesh picking - FOR DEBUGGING
   scene.onPointerDown = function (evt, pickResult) {
@@ -115,14 +114,6 @@ const createScene = async function () {
     optionalFeatures: true,
   });
 
-  // // add drag behavior
-  // sofaMesh
-  //   .bakeCurrentTransformIntoVertices()
-  //   .addBehavior(new BABYLON.SixDofDragBehavior());
-
-  // add drag action to table
-  table.addBehavior(new BABYLON.SixDofDragBehavior());
-
   return scene;
 };
 
@@ -137,6 +128,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
 
 
 
