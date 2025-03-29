@@ -103,7 +103,7 @@ const createScene = async function () {
   });
 
   // add drab action to chair
-  chair.addBehavior(new BABYLON.SixDofDragBehavior());
+  chairMesh.addBehavior(new BABYLON.SixDofDragBehavior());
 
   // ! end of test chair
 
