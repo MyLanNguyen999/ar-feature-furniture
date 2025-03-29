@@ -8,6 +8,15 @@ const sofaModels = ["sofa.glb", "sofa-1.glb", "sofa-2.glb"];
 let currentSofaIndex = -1; // Start at -1 so the first sofa is correctly loaded
 let sofaMesh = null;
 
+// accent chair array
+const accentChairModels = [
+  "accent-chair.glb",
+  "accent-chair-1.glb",
+  "accent-chair-2.glb",
+];
+let currentAccentChairIndex = -1; // Start at -1 so the first accent chair is correctly loaded
+let accentChairMesh = null;
+
 async function loadSofa(scene) {
   // Remove previous sofa if exists
   if (sofaMesh) {
@@ -19,7 +28,10 @@ async function loadSofa(scene) {
   currentSofaIndex = (currentSofaIndex + 1) % sofaModels.length;
   const sofaFile = sofaModels[currentSofaIndex];
 
-  console.log(`🔄 Loading: ${sofaFile}`);
+  currentAccentChairIndex = (currentAccentChairIndex + 1) % accentChairModels.length;
+  const accentChairFile = accentChairModels[currentAccentChairIndex];
+
+  // console.log(`🔄 Loading: ${sofaFile}`);
 
   // Load the new sofa
   const result = await BABYLON.SceneLoader.ImportMeshAsync(
@@ -29,6 +41,13 @@ async function loadSofa(scene) {
     scene
   );
 
+  // Load the accent chair
+  const accentChairResult = await BABYLON.SceneLoader.ImportMeshAsync(
+    "",
+    "./meshes/",
+    accentChairFile,
+    scene
+  );
   // Select the correct mesh
   sofaMesh =
     result.meshes.find((mesh) => mesh.name !== "__root__") || result.meshes[0];
@@ -39,6 +58,22 @@ async function loadSofa(scene) {
   sofaMesh.scaling = new BABYLON.Vector3(1, 1, 1);
   sofaMesh.rotation.y = Math.PI;
   sofaMesh.scaling.z = -1;
+
+  // Select the correct accent chair mesh
+  accentChairMesh =
+    accentChairResult.meshes.find((mesh) => mesh.name !== "__root__") ||
+    accentChairResult.meshes[0];
+  // Ensure the accent chair is visible and pickable
+  accentChairMesh.isPickable = true;
+  accentChairMesh.position = new BABYLON.Vector3(0, 1, -1);
+  accentChairMesh.scaling = new BABYLON.Vector3(1, 1, 1);
+  accentChairMesh.rotation.y = Math.PI;
+  accentChairMesh.scaling.z = -1;
+  // accent chair rotation
+  accentChairMesh.rotation.x = Math.PI / 2;
+  accentChairMesh.rotation.z = Math.PI / 2;
+  // accent chair scaling
+  accentChairMesh.scaling.x = 0.5;
 
   // // add drag behavior
   // sofaMesh.bakeCurrentTransformIntoVertices().addBehavior(new BABYLON.SixDofDragBehavior());
