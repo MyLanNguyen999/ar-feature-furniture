@@ -66,7 +66,7 @@ async function loadSofa(scene) {
   // Ensure the accent chair is visible and pickable
   accentChairMesh.isPickable = true;
   accentChairMesh.position = new BABYLON.Vector3(0, 1, -1);
-  accentChairMesh.scaling = new BABYLON.Vector3(1, 1, 1);
+  accentChairMesh.scaling = new BABYLON.Vector3(-10, -10, -10);
   accentChairMesh.rotation.y = Math.PI;
   accentChairMesh.scaling.z = -1;
   // accent chair rotation
