@@ -86,7 +86,7 @@ const createScene = async function () {
   );
 
   const tableMat = new BABYLON.StandardMaterial("tableMat");
-  tableMat.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+  tableMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
   table.material = tableMat;
   table.position.y = 0.5;
   table.position.z = 2;
