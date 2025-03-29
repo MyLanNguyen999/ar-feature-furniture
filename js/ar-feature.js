@@ -100,10 +100,10 @@ const createScene = async function () {
     optionalFeatures: true,
   });
 
-  // add drag behavior
-  sofaMesh
-    .bakeCurrentTransformIntoVertices()
-    .addBehavior(new BABYLON.SixDofDragBehavior());
+  // // add drag behavior
+  // sofaMesh
+  //   .bakeCurrentTransformIntoVertices()
+  //   .addBehavior(new BABYLON.SixDofDragBehavior());
 
   return scene;
 };
