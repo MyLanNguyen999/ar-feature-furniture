@@ -92,14 +92,14 @@ const createScene = async function () {
   table.addBehavior(new BABYLON.SixDofDragBehavior());
 
   // !test create a chair
-  const chair = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "chair-1.glb").then((result) => { 
-    const chairMesh = result.meshes[0];
-    chairMesh.position.x = 0;
-    chairMesh.position.y = -0.2;
-    chairMesh.position.z = 2;
-    chairMesh.scaling = new BABYLON.Vector3(0.08, 0.08, 0.08);
+  // const chair = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "chair-1.glb").then((result) => { 
+  //   const chairMesh = result.meshes[0];
+  //   chairMesh.position.x = 0;
+  //   chairMesh.position.y = -0.2;
+  //   chairMesh.position.z = 2;
+  //   chairMesh.scaling = new BABYLON.Vector3(0.08, 0.08, 0.08);
 
-  });
+  // });
 
   // add drab action to chair
   // chair.bakeCurrentTransformIntoVetices().addBehavior(new BABYLON.SixDofDragBehavior());
@@ -109,6 +109,12 @@ const createScene = async function () {
   // @ test the chair with drag behavior
   BABYLON.SceneLoader.ImportMesh("", "./meshes/", "chair-1.glb", scene, function (meshes){
     let chairMesh = meshes[0];
+
+    chairMesh.position.x = 0;
+    chairMesh.position.y = -0.2;
+    chairMesh.position.z = 2;
+    chairMesh.scaling = new BABYLON.Vector3(0.08, 0.08, 0.08);
+
     let dragBehavior = new BABYLON.PointerDragBehavior({ 
       dragPlaneNormal: new BABYLON.Vector3(0, 1, 0)
       
@@ -156,6 +162,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
 
 
 
