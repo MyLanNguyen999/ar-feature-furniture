@@ -102,6 +102,9 @@ const createScene = async function () {
 
   });
 
+  // add drab action to chair
+  chair.addBehavior(new BABYLON.SixDofDragBehavior());
+
   // ! end of test chair
 
   // 🔥 Click listener for mesh picking - FOR DEBUGGING
