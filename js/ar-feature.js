@@ -92,7 +92,7 @@ const createScene = async function () {
   table.addBehavior(new BABYLON.SixDofDragBehavior());
 
   // !test create a chair
-  const chair = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "chair.glb").then((result) => { 
+  const chair = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "chair-1.glb").then((result) => { 
     const chairMesh = result.meshes[0];
     chairMesh.position.x = 0;
     chairMesh.position.y = 0;
