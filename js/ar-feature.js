@@ -110,12 +110,12 @@ const createScene = async function () {
   BABYLON.SceneLoader.ImportMesh("", "./meshes/", "chair-1.glb", scene, function (meshes){
     let chairMesh = meshes[0];
     let dragBehavior = new BABYLON.PointerDragBehavior({ 
-      dragPlaneNormal: new BABYLON.Vector3(0, 1, 0),
-      chairMesh.addBehavior(dragBehavior);
+      dragPlaneNormal: new BABYLON.Vector3(0, 1, 0)
+      
     });
-    let sixDofDrag = new BABYLON.SixDofDragBehavior({
-      chairMesh.addBehavior(sixDofDrag);
-     });
+    chairMesh.addBehavior(dragBehavior);
+    let sixDofDrag = new BABYLON.SixDofDragBehavior();
+    chairMesh.addBehavior(sixDofDrag);
   });
   // @ end test
 
@@ -156,6 +156,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
 
 
 
