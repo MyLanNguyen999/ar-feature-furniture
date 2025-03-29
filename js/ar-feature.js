@@ -68,6 +68,7 @@ async function loadSofa(scene) {
   accentChairMesh.position = new BABYLON.Vector3(0, 1, -1);
   accentChairMesh.scaling = new BABYLON.Vector3(-10, -10, -10);
   accentChairMesh.rotation.y = Math.PI;
+  accentChairMesh.scaling.z = -10;
 
   // accent chair rotation
   accentChairMesh.rotation.x = Math.PI / 2;
