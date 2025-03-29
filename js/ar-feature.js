@@ -92,60 +92,12 @@ const createScene = async function () {
   table.addBehavior(new BABYLON.SixDofDragBehavior());
 
   // !test create a chair
-  // Create the chair seat (matching table size)
-  const seat = BABYLON.MeshBuilder.CreateBox(
-    "seat",
-    { width: 0.5, height: 0.1, depth: 0.5 },
-    scene
-  );
-  seat.position.y = 0.3; // Raise above ground
-  seat.material = new BABYLON.StandardMaterial("seatMat", scene);
-  seat.material.diffuseColor = new BABYLON.Color3(0.8, 0.5, 0.2); // Brown color
-
-  // Create the backrest
-  const backrest = BABYLON.MeshBuilder.CreateBox(
-    "backrest",
-    { width: 0.5, height: 0.3, depth: 0.05 },
-    scene
-  );
-  backrest.position.y = 0.45; // Above seat
-  backrest.position.z = -0.25; // Move to the back
-  backrest.material = seat.material; // Same material
-
-  // Create the four legs (scaled down)
-  const legPositions = [
-    { x: -0.2, z: -0.2 },
-    { x: 0.2, z: -0.2 },
-    { x: -0.2, z: 0.2 },
-    { x: 0.2, z: 0.2 },
-  ];
-
-  const legMaterial = new BABYLON.StandardMaterial("legMat", scene);
-  legMaterial.diffuseColor = new BABYLON.Color3(0.5, 0.3, 0.1); // Darker brown color
-
-  legPositions.forEach((pos) => {
-    const leg = BABYLON.MeshBuilder.CreateCylinder(
-      "leg",
-      { height: 0.3, diameter: 0.05 },
-      scene
-    );
-    leg.position.set(pos.x, 0.15, pos.z); // Raise legs to match seat height
-    leg.material = legMaterial;
+  const chair = BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", "chair.glb").then((result) => { 
+    const chairMesh = result.meshes[0];
+    chairMesh.position.x = 0;
+    chairMesh.position.y = 0;
+    chairMesh.position.z = -2;
   });
-
-  // Group into a parent TransformNode
-  const chair = new BABYLON.TransformNode("chair", scene);
-  seat.parent = chair;
-  backrest.parent = chair;
-
-  scene.meshes.forEach((mesh) => {
-    if (mesh.name.includes("leg")) {
-      mesh.parent = chair;
-    }
-  });
-
-  // Position chair near the table
-  chair.position.set(0, 0, 0.7);
 
   // ! end of test chair
 
