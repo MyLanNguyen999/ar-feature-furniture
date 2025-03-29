@@ -95,7 +95,7 @@ const createScene = async function () {
   // Create the seat of the chair
   const seat = BABYLON.MeshBuilder.CreateBox(
     "seat",
-    { width: 2, height: 0.5, depth: 2 },
+    { width: 1, height: 0.25, depth: 1 },
     scene
   );
   seat.position.y = 1; // Raise the seat above the ground
@@ -105,7 +105,7 @@ const createScene = async function () {
   // Create the backrest
   const backrest = BABYLON.MeshBuilder.CreateBox(
     "backrest",
-    { width: 2, height: 2, depth: 0.3 },
+    { width: 1, height: 1, depth: 0.15 },
     scene
   );
   backrest.position.y = 2; // Position above the seat
@@ -126,7 +126,7 @@ const createScene = async function () {
   legPositions.forEach((pos) => {
     const leg = BABYLON.MeshBuilder.CreateCylinder(
       "leg",
-      { height: 2, diameter: 0.3 },
+      { height: 1, diameter: 0.15 },
       scene
     );
     leg.position.set(pos.x, 0, pos.z); // Position legs at the corners
