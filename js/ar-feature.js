@@ -98,7 +98,7 @@ const createScene = async function () {
   // Load the first sofa
   await loadSofa(scene);
 
-  // testing a mesh table box
+  // add a mesh table box
   const table = BABYLON.MeshBuilder.CreateBox("table", { size: 0.5 }, scene);
 
   const tableMat = new BABYLON.StandardMaterial("tableMat");
@@ -111,6 +111,18 @@ const createScene = async function () {
   // add drag action to table
   table.addBehavior(new BABYLON.SixDofDragBehavior());
 
+  // add a click event to change the color of the table randomly
+  table.actionManager = new BABYLON.ActionManager(scene);
+  table.actionManager.registerAction(
+    new BABYLON.ExecuteCodeAction(
+      BABYLON.ActionManager.OnPickTrigger,
+      function () {
+        // generate random RGB values
+        const randomColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
+        tableMat.diffuseColor = randomColor;
+      }
+    )
+  );
 
   // @ add the chair with drag behavior
   BABYLON.SceneLoader.ImportMesh("", "./meshes/", "chair-1.glb", scene, function (meshes){
@@ -131,7 +143,7 @@ const createScene = async function () {
   });
   // @ end chair
 
-  // 🔥 Click listener for mesh picking - FOR DEBUGGING
+  // 🔥 Click listener for mesh picking 
   scene.onPointerDown = function (evt, pickResult) {
     console.log("🖱 Click detected!");
     if (pickResult.hit) {
