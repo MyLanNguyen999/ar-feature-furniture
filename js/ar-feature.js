@@ -152,7 +152,26 @@ const createScene = async function () {
       // ! create material for chair
       const chairMat = new BABYLON.StandardMaterial("chairMat", scene);
       chairMat.diffuseColor = new BABYLON.Color3(1, 0, 0); // initial color
-      chairMesh.material = chairMat;
+
+      // apply material and action manager to all child meshes
+      chairMesh.getChildMeshes().forEach((mesh) => {
+        mesh.material = chairMat;
+        mesh.actionManager = new BABYLON.ActionManager(scene);
+        mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            function () {
+              // generate random RGB values
+              const randomColor = new BABYLON.Color3(
+                Math.random(),
+                Math.random(),
+                Math.random()
+              );
+              chairMat.diffuseColor = randomColor;
+            }
+          )
+        );
+      });
 
       // add drag behavior to chair
       let dragBehavior = new BABYLON.PointerDragBehavior({
@@ -162,22 +181,7 @@ const createScene = async function () {
       let sixDofDrag = new BABYLON.SixDofDragBehavior();
       chairMesh.addBehavior(sixDofDrag);
 
-      // add a click event to change the color of the chair randomly
-      chairMesh.actionManager = new BABYLON.ActionManager(scene);
-      chairMesh.actionManager.registerAction(
-        new BABYLON.ExecuteCodeAction(
-          BABYLON.ActionManager.OnPickTrigger,
-          function () {
-            // generate random RGB values
-            const randomColor = new BABYLON.Color3(
-              Math.random(),
-              Math.random(),
-              Math.random()
-            );
-            chairMat.diffuseColor = randomColor;
-          }
-        )
-      );
+      
     }
   );
   // @ END OF ACCENT CHAIR
@@ -220,6 +224,7 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
 
 
 
