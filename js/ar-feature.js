@@ -3,6 +3,8 @@
 const canvas = document.getElementById("renderCanvas");
 const engine = new BABYLON.Engine(canvas, true);
 
+// ---------------------------------------------
+// @ START OF SOFA
 // Sofa models array for cycling through them
 const sofaModels = ["sofa.glb", "sofa-1.glb", "sofa-2.glb"];
 let currentSofaIndex = -1; // Start at -1 so the first sofa is correctly loaded
@@ -19,7 +21,6 @@ async function loadSofa(scene) {
   currentSofaIndex = (currentSofaIndex + 1) % sofaModels.length;
   const sofaFile = sofaModels[currentSofaIndex];
 
-
   // console.log(`🔄 Loading: ${sofaFile}`);
 
   // Load the new sofa
@@ -34,7 +35,7 @@ async function loadSofa(scene) {
   result.meshes.forEach((mesh) => {
     mesh.isPickable = true;
   });
-  
+
   // Select the correct mesh
   sofaMesh =
     result.meshes.find((mesh) => mesh.name !== "__root__") || result.meshes[0];
@@ -45,12 +46,14 @@ async function loadSofa(scene) {
   sofaMesh.scaling = new BABYLON.Vector3(1, 1, 1);
   sofaMesh.rotation.y = Math.PI;
   // sofaMesh.scaling.z = -1;
+  // @ END OF SOFA
+  // ---------------------------------------------
 
   // ! test drag
-  result.meshes.forEach((mesh) => { 
+  result.meshes.forEach((mesh) => {
     if (mesh instanceof BABYLON.Mesh) {
       let dragBehavior = new BABYLON.PointerDragBehavior({
-      dragPlaneNormal: new BABYLON.Vector3(0, 1, 0)
+        dragPlaneNormal: new BABYLON.Vector3(0, 1, 0),
       });
       mesh.addBehavior(dragBehavior);
 
@@ -61,8 +64,6 @@ async function loadSofa(scene) {
   console.log(`Loaded: $(sofaFile)`);
 
   // ! end test
-
-  
 }
 
 const createScene = async function () {
@@ -98,6 +99,8 @@ const createScene = async function () {
   // Load the first sofa
   await loadSofa(scene);
 
+  // ---------------------------------------------
+  // @ START OF TABLE BOX
   // add a mesh table box
   const table = BABYLON.MeshBuilder.CreateBox("table", { size: 0.5 }, scene);
 
@@ -118,32 +121,46 @@ const createScene = async function () {
       BABYLON.ActionManager.OnPickTrigger,
       function () {
         // generate random RGB values
-        const randomColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
+        const randomColor = new BABYLON.Color3(
+          Math.random(),
+          Math.random(),
+          Math.random()
+        );
         tableMat.diffuseColor = randomColor;
       }
     )
   );
+  // @ END OF TABLE BOX
+  // ---------------------------------------------
 
+  // ---------------------------------------------
+  // @ START OF ACCENT CHAIR
   // @ add the chair with drag behavior
-  BABYLON.SceneLoader.ImportMesh("", "./meshes/", "chair-1.glb", scene, function (meshes){
-    let chairMesh = meshes[0];
+  BABYLON.SceneLoader.ImportMesh(
+    "",
+    "./meshes/",
+    "chair-1.glb",
+    scene,
+    function (meshes) {
+      let chairMesh = meshes[0];
 
-    chairMesh.position.x = 0;
-    chairMesh.position.y = -0.2;
-    chairMesh.position.z = 2;
-    chairMesh.scaling = new BABYLON.Vector3(0.08, 0.08, 0.08);
+      chairMesh.position.x = 0;
+      chairMesh.position.y = -0.2;
+      chairMesh.position.z = 2;
+      chairMesh.scaling = new BABYLON.Vector3(0.08, 0.08, 0.08);
 
-    let dragBehavior = new BABYLON.PointerDragBehavior({ 
-      dragPlaneNormal: new BABYLON.Vector3(0, 1, 0)
-      
-    });
-    chairMesh.addBehavior(dragBehavior);
-    let sixDofDrag = new BABYLON.SixDofDragBehavior();
-    chairMesh.addBehavior(sixDofDrag);
-  });
-  // @ end chair
+      let dragBehavior = new BABYLON.PointerDragBehavior({
+        dragPlaneNormal: new BABYLON.Vector3(0, 1, 0),
+      });
+      chairMesh.addBehavior(dragBehavior);
+      let sixDofDrag = new BABYLON.SixDofDragBehavior();
+      chairMesh.addBehavior(sixDofDrag);
+    }
+  );
+  // @ END OF ACCENT CHAIR
+  // ---------------------------------------------
 
-  // 🔥 Click listener for mesh picking 
+  // 🔥 Click listener for mesh picking
   scene.onPointerDown = function (evt, pickResult) {
     console.log("🖱 Click detected!");
     if (pickResult.hit) {
@@ -180,24 +197,4 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
