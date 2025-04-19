@@ -149,12 +149,35 @@ const createScene = async function () {
       chairMesh.position.z = 2;
       chairMesh.scaling = new BABYLON.Vector3(0.08, 0.08, 0.08);
 
+      // ! create material for chair
+      const chairMat = new BABYLON.StandardMaterial("chairMat", scene);
+      chairMat.diffuseColor = new BABYLON.Color3(1, 0, 0); // initial color
+      chairMesh.material = chairMat;
+
+      // add drag behavior to chair
       let dragBehavior = new BABYLON.PointerDragBehavior({
         dragPlaneNormal: new BABYLON.Vector3(0, 1, 0),
       });
       chairMesh.addBehavior(dragBehavior);
       let sixDofDrag = new BABYLON.SixDofDragBehavior();
       chairMesh.addBehavior(sixDofDrag);
+
+      // add a click event to change the color of the chair randomly
+      chairMesh.actionManager = new BABYLON.ActionManager(scene);
+      chairMesh.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(
+          BABYLON.ActionManager.OnPickTrigger,
+          function () {
+            // generate random RGB values
+            const randomColor = new BABYLON.Color3(
+              Math.random(),
+              Math.random(),
+              Math.random()
+            );
+            chairMat.diffuseColor = randomColor;
+          }
+        )
+      );
     }
   );
   // @ END OF ACCENT CHAIR
@@ -197,4 +220,6 @@ createScene().then((sceneToRender) => {
 window.addEventListener("resize", () => {
   engine.resize();
 });
+
+
 
